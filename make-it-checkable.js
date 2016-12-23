@@ -9,7 +9,9 @@ module.exports = library.export(
 
       var isChecked = options.checked || false
 
-      el.children.unshift(checkBox())
+      var box = checkBox()
+
+      el.children.unshift(box)
 
       var id = el.assignId()
 
@@ -19,30 +21,30 @@ module.exports = library.export(
 
       el.classes.push("checkable-"+id)
 
-      el.onclick(checkOffOnBridge(bridge).withArgs(functionCall.raw("event"), id, handler).evalable())
+      box.onclick(checkOffOnBridge(bridge).withArgs(functionCall.raw("event"), id, handler).evalable())
     }
 
     function checkOffOnBridge(bridge) {
       var checkOff = bridge.__makeItCheckableCheckOffBinding
 
-      if (!checkOff) {
-        checkOff = bridge.__makeItCheckableCheckOffBinding = bridge.defineFunction(function checkOff(event, id, callback) {
-          event.preventDefault()
-          var el = document.querySelector(".checkable-"+id)
+      if (checkOff) { return checkOff }
 
-          var isCompleted = el.classList.contains("is-checked")
+      checkOff = bridge.__makeItCheckableCheckOffBinding = bridge.defineFunction(function checkOff(event, id, callback) {
+        event.preventDefault()
+        var el = document.querySelector(".checkable-"+id)
 
-          if (isCompleted) {
-            el.classList.remove("is-checked")
-          } else {
-            el.classList.add("is-checked")
-          }
+        var isCompleted = el.classList.contains("is-checked")
 
-          isCompleted = !isCompleted
+        if (isCompleted) {
+          el.classList.remove("is-checked")
+        } else {
+          el.classList.add("is-checked")
+        }
 
-          callback(isCompleted, id)
-        })
-      }
+        isCompleted = !isCompleted
+
+        callback(isCompleted, id)
+      })
 
       return checkOff
     }      
