@@ -1,6 +1,6 @@
 {
   "name": "make-it-checkable",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Add a checkbox to an element",
   "main": "make-it-checkable.js",
   "dependencies": {
