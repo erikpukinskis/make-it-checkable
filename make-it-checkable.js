@@ -9,9 +9,12 @@ module.exports = library.export(
 
       var isChecked = options.checked || false
 
-      var box = checkBox()
-
-      el.children.unshift(box)
+      if (options.kind == "toggle-button") {
+        el.addSelector(".button.toggle-button")
+      } else {
+        var box = checkBox()
+        el.children.unshift(box)
+      }
 
       var id = el.assignId()
 
@@ -21,7 +24,13 @@ module.exports = library.export(
 
       el.classes.push("checkable-"+id)
 
-      box.onclick(checkOffOnBridge(bridge).withArgs(functionCall.raw("event"), id, handler).evalable())
+      var handler = checkOffOnBridge(bridge).withArgs(functionCall.raw("event"), id, handler).evalable()
+
+      if (box) {
+        box.onclick(handler)
+      } else {
+        el.onclick(handler)
+      }
     }
 
     function checkOffOnBridge(bridge) {
@@ -63,10 +72,9 @@ module.exports = library.export(
     })
 
     var checkBox = element.template(
-      ".toggle-button",
+      ".check-box",
       element.style({
         "border": "2px solid #888",
-        // "vertical-align": "-0.15em",
         "background": "transparent",
         "width": "1.15em",
         "height": "1.15em",
@@ -88,7 +96,32 @@ module.exports = library.export(
       })
     )
 
-    makeItCheckable.stylesheet = element.stylesheet(checkMark, checkMarkVisible, checkBox, checkableChecked)
+    var toggleButton = element.style(
+      ".toggle-button",
+      {
+        "background": "none",
+        "border": "2px solid #9393ff",
+        "color": "#7676e6",
+      }
+    )
+
+    var toggleButtonHover = element.style(
+      ".toggle-button:hover",
+      {
+        "background": "white",
+      }
+    )
+
+    var toggleButtonChecked = element.style(
+      ".toggle-button.is-checked",
+      {
+        "text-decoration": "none",
+        "background": "#9393ff",
+        "color": "white",
+      }
+    )
+
+    makeItCheckable.stylesheet = element.stylesheet(checkMark, checkMarkVisible, checkBox, checkableChecked, toggleButton, toggleButtonHover, toggleButtonChecked)
 
     return makeItCheckable
   }
