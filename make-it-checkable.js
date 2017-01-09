@@ -78,7 +78,7 @@ module.exports = library.export(
         "background": "transparent",
         "width": "1.15em",
         "height": "1.15em",
-        "margin-right": "0.5em",
+        "margin-right": "0.25em",
         "padding": "1px 3px 0px 3px",
         "font-size": "1.15em",
         "line-height": "1em",
