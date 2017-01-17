@@ -34,11 +34,12 @@ module.exports = library.export(
     }
 
     function checkOffOnBridge(bridge) {
-      var checkOff = bridge.__makeItCheckableCheckOffBinding
 
-      if (checkOff) { return checkOff }
+      var binding = bridge.remember("make-it-checkable/checkOff")
 
-      checkOff = bridge.__makeItCheckableCheckOffBinding = bridge.defineFunction(function checkOff(event, id, callback) {
+      if (binding) { return binding }
+
+      binding = bridge.defineFunction(function checkOff(event, id, callback) {
         event.preventDefault()
         var el = document.querySelector(".checkable-"+id)
 
@@ -55,7 +56,9 @@ module.exports = library.export(
         callback(isCompleted, id)
       })
 
-      return checkOff
+      bridge.see("make-it-checkable/checkOff", binding)
+
+      return binding
     }      
 
     var checkMark = element.template(
