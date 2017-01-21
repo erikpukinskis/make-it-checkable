@@ -100,7 +100,7 @@ module.exports = library.export(
     )
 
     var toggleButton = element.style(
-      ".toggle-button",
+      ".button.toggle-button",
       {
         "background": "none",
         "border": "2px solid #9393ff",
@@ -109,9 +109,9 @@ module.exports = library.export(
     )
 
     var toggleButtonHover = element.style(
-      ".toggle-button:hover",
+      ".button.toggle-button:hover",
       {
-        "background": "white",
+        "background": "#eaffff",
       }
     )
 
@@ -124,7 +124,14 @@ module.exports = library.export(
       }
     )
 
-    makeItCheckable.stylesheet = element.stylesheet(checkMark, checkMarkVisible, checkBox, checkableChecked, toggleButton, toggleButtonHover, toggleButtonChecked)
+    var toggleButtonCheckedHover = element.style(
+      ".toggle-button.is-checked:hover",
+      {
+        "background": "#9fb1fb",
+      }
+    )
+
+    makeItCheckable.stylesheet = element.stylesheet(checkMark, checkMarkVisible, checkBox, checkableChecked, toggleButton, toggleButtonHover, toggleButtonChecked, toggleButtonCheckedHover)
 
     return makeItCheckable
   }
