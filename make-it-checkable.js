@@ -5,7 +5,9 @@ module.exports = library.export(
   ["web-element", "function-call"],
   function(element, functionCall) {
 
-    function makeItCheckable(el, bridge, handler, options) {
+    function makeItCheckable(el, bridge, callback, options) {
+
+      if (!options) { options = {} }
 
       var isChecked = options.checked || false
 
@@ -24,7 +26,7 @@ module.exports = library.export(
 
       el.classes.push("checkable-"+id)
 
-      var handler = checkOffOnBridge(bridge).withArgs(functionCall.raw("event"), id, handler).evalable()
+      var handler = checkOffOnBridge(bridge).withArgs(functionCall.raw("event"), id, callback).evalable()
 
       if (box) {
         box.onclick(handler)
