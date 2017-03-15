@@ -41,6 +41,8 @@ module.exports = library.export(
 
       if (binding) { return binding }
 
+      bridge.addToHead(stylesheet)
+    
       binding = bridge.defineFunction(function checkOff(event, id, callback) {
         event.preventDefault()
         var el = document.querySelector(".checkable-"+id)
@@ -133,7 +135,7 @@ module.exports = library.export(
       }
     )
 
-    makeItCheckable.stylesheet = element.stylesheet(checkMark, checkMarkVisible, checkBox, checkableChecked, toggleButton, toggleButtonHover, toggleButtonChecked, toggleButtonCheckedHover)
+    var stylesheet = element.stylesheet(checkMark, checkMarkVisible, checkBox, checkableChecked, toggleButton, toggleButtonHover, toggleButtonChecked, toggleButtonCheckedHover)
 
     return makeItCheckable
   }
